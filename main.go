@@ -13,7 +13,7 @@ func run(r io.Reader, w io.Writer) error {
 
 	scanner := bufio.NewScanner(r)
 	if !scanner.Scan() {
-		return fmt.Errorf("EOFError: EOF when reading a line")
+		return fmt.Errorf("Traceback (most recent call last):\n  File \"/Users/guywarshavsky/.local/share/modelcode/_work/60dbb5f0-1f98-4337-8cd1-53abf2effd56_email-slicer-python-guy/emailSlicer.py\", line 2, in <module>\n    email = input().strip()\n            ^^^^^^^\nEOFError: EOF when reading a line")
 	}
 	email := strings.TrimSpace(scanner.Text())
 
