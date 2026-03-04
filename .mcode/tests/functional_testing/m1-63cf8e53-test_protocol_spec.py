@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-03-04T13:41:20.642481+00:00
+Generated at: 2026-03-04T13:48:27.193100+00:00
 Project: email-slicer-python-guy
 Milestone: 1
 """
