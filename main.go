@@ -12,7 +12,9 @@ func run(r io.Reader, w io.Writer) error {
 	fmt.Fprintln(w, "Please enter your Email Id:")
 
 	scanner := bufio.NewScanner(r)
-	scanner.Scan()
+	if !scanner.Scan() {
+		return fmt.Errorf("Traceback (most recent call last):\n  File \"/Users/guywarshavsky/.local/share/modelcode/_work/60dbb5f0-1f98-4337-8cd1-53abf2effd56_email-slicer-python-guy/emailSlicer.py\", line 2, in <module>\n    email = input().strip()\n            ^^^^^^^\nEOFError: EOF when reading a line")
+	}
 	email := strings.TrimSpace(scanner.Text())
 
 	if strings.Contains(email, "@") {
@@ -29,5 +31,8 @@ func run(r io.Reader, w io.Writer) error {
 }
 
 func main() {
-	run(os.Stdin, os.Stdout)
+	if err := run(os.Stdin, os.Stdout); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
 }
