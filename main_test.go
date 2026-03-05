@@ -108,23 +108,23 @@ func TestSliceEmail(t *testing.T) {
 
 func TestOutputFormat(t *testing.T) {
 	tests := []struct {
-		name     string
-		email    string
-		wantOut  string
+		name    string
+		email   string
+		wantOut string
 	}{
 		{
-			name:  "valid email output format",
-			email: "avimax37@gmail.com",
+			name:    "valid email output format",
+			email:   "avimax37@gmail.com",
 			wantOut: "Your username is:  avimax37\nYour domain is:  gmail.com\n",
 		},
 		{
-			name:  "invalid email output format",
-			email: "not-an-email",
+			name:    "invalid email output format",
+			email:   "not-an-email",
 			wantOut: "Please enter a valid Email Id.\n",
 		},
 		{
-			name:  "multiple at symbols output format",
-			email: "user@sub@domain.com",
+			name:    "multiple at symbols output format",
+			email:   "user@sub@domain.com",
 			wantOut: "Your username is:  user\nYour domain is:  sub@domain.com\n",
 		},
 	}
