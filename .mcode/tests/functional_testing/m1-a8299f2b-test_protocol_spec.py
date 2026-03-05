@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-03-05T10:04:01.154230+00:00
+Generated at: 2026-03-05T10:04:22.426785+00:00
 Project: email-slicer-python-guy
 Milestone: 1
 """
@@ -209,40 +209,40 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
     },
     {
         "name": "test_invalid_at_only",
-        "category": "INVALID_ARGS",
-        "description": "Input that is just '@' is rejected (empty username and domain)",
+        "category": "BOUNDARY",
+        "description": "Input that is just '@' produces empty username and domain (Python finds '@' so enters valid branch)",
         "command": "email-slicer",
         "subcommand": "",
         "args": [],
         "stdin": "@",
         "expected_exit_code": 0,
-        "expected_stdout": "Please enter your Email Id:\nPlease enter a valid Email Id.",
+        "expected_stdout": "Please enter your Email Id:\nYour username is:  \nYour domain is:",
         "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_invalid_at_at_start",
-        "category": "INVALID_ARGS",
-        "description": "Input with '@' at start is rejected (empty username)",
+        "category": "BOUNDARY",
+        "description": "Input with '@' at start produces empty username with domain (Python finds '@' so enters valid branch)",
         "command": "email-slicer",
         "subcommand": "",
         "args": [],
         "stdin": "@domain.com",
         "expected_exit_code": 0,
-        "expected_stdout": "Please enter your Email Id:\nPlease enter a valid Email Id.",
+        "expected_stdout": "Please enter your Email Id:\nYour username is:  \nYour domain is:  domain.com",
         "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_invalid_at_at_end",
-        "category": "INVALID_ARGS",
-        "description": "Input with '@' at end is rejected (empty domain)",
+        "category": "BOUNDARY",
+        "description": "Input with '@' at end produces username with empty domain (Python finds '@' so enters valid branch)",
         "command": "email-slicer",
         "subcommand": "",
         "args": [],
         "stdin": "user@",
         "expected_exit_code": 0,
-        "expected_stdout": "Please enter your Email Id:\nPlease enter a valid Email Id.",
+        "expected_stdout": "Please enter your Email Id:\nYour username is:  user\nYour domain is:",
         "expected_stderr": null,
         "timeout_seconds": 10
     },
@@ -253,7 +253,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "command": "email-slicer",
         "subcommand": "",
         "args": [],
-        "stdin": "",
+        "stdin": "\n",
         "expected_exit_code": 0,
         "expected_stdout": "Please enter your Email Id:\nPlease enter a valid Email Id.",
         "expected_stderr": null,
@@ -340,7 +340,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
 ]'''))
 
 # CLI binary/entry point
-CLI_COMMAND = "python emailSlicer.py"
+CLI_COMMAND = "./email-slicer"
 
 # Working directory for CLI execution
 WORKING_DIR = "."
