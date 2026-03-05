@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-03-05T14:39:10.848873+00:00
+Generated at: 2026-03-05T14:43:13.857625+00:00
 Project: email-slicer-python-guy
 Milestone: 1
 """
@@ -55,7 +55,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_happy_path_simple_email",
         "category": "HAPPY_PATH",
         "description": "Valid email address is split into username and domain",
-        "command": "email-slicer",
+        "command": "./email-slicer",
         "subcommand": "",
         "args": [],
         "stdin": "user@example.com\n",
@@ -68,7 +68,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_happy_path_complex_email",
         "category": "HAPPY_PATH",
         "description": "Valid email with dots and hyphens in username and domain",
-        "command": "email-slicer",
+        "command": "./email-slicer",
         "subcommand": "",
         "args": [],
         "stdin": "john.doe-123@mail-server.example.org\n",
@@ -81,7 +81,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_happy_path_multiple_at_signs",
         "category": "HAPPY_PATH",
         "description": "Email with multiple @ symbols splits at the first one",
-        "command": "email-slicer",
+        "command": "./email-slicer",
         "subcommand": "",
         "args": [],
         "stdin": "a@b@c\n",
@@ -94,7 +94,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_invalid_no_at_symbol",
         "category": "INVALID_ARGS",
         "description": "Input without @ symbol prints invalid email message",
-        "command": "email-slicer",
+        "command": "./email-slicer",
         "subcommand": "",
         "args": [],
         "stdin": "userexample.com\n",
@@ -107,7 +107,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_invalid_plain_text",
         "category": "INVALID_ARGS",
         "description": "Plain text with no @ symbol is rejected",
-        "command": "email-slicer",
+        "command": "./email-slicer",
         "subcommand": "",
         "args": [],
         "stdin": "hello world\n",
@@ -120,7 +120,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_boundary_empty_username",
         "category": "BOUNDARY",
         "description": "Email starting with @ results in empty username",
-        "command": "email-slicer",
+        "command": "./email-slicer",
         "subcommand": "",
         "args": [],
         "stdin": "@example.com\n",
@@ -133,7 +133,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_boundary_empty_domain",
         "category": "BOUNDARY",
         "description": "Email ending with @ results in empty domain",
-        "command": "email-slicer",
+        "command": "./email-slicer",
         "subcommand": "",
         "args": [],
         "stdin": "user@\n",
@@ -146,7 +146,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_boundary_only_at_symbol",
         "category": "BOUNDARY",
         "description": "Input of just @ results in empty username and empty domain",
-        "command": "email-slicer",
+        "command": "./email-slicer",
         "subcommand": "",
         "args": [],
         "stdin": "@\n",
@@ -159,7 +159,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_boundary_whitespace_only_input",
         "category": "BOUNDARY",
         "description": "Whitespace-only input is trimmed to empty string and rejected as invalid",
-        "command": "email-slicer",
+        "command": "./email-slicer",
         "subcommand": "",
         "args": [],
         "stdin": "   \n",
@@ -172,7 +172,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_boundary_empty_input",
         "category": "BOUNDARY",
         "description": "Empty input (just newline) is rejected as invalid",
-        "command": "email-slicer",
+        "command": "./email-slicer",
         "subcommand": "",
         "args": [],
         "stdin": "\n",
@@ -185,7 +185,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_boundary_whitespace_around_email",
         "category": "BOUNDARY",
         "description": "Leading and trailing whitespace is trimmed before parsing",
-        "command": "email-slicer",
+        "command": "./email-slicer",
         "subcommand": "",
         "args": [],
         "stdin": "  user@example.com  \n",
@@ -198,7 +198,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_pipe_input_valid_email",
         "category": "PIPE_INPUT",
         "description": "Piping a valid email via stdin produces correct output",
-        "command": "email-slicer",
+        "command": "./email-slicer",
         "subcommand": "",
         "args": [],
         "stdin": "piped@test.org\n",
@@ -211,7 +211,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_pipe_input_invalid_email",
         "category": "PIPE_INPUT",
         "description": "Piping an invalid email via stdin prints error message",
-        "command": "email-slicer",
+        "command": "./email-slicer",
         "subcommand": "",
         "args": [],
         "stdin": "noemail\n",
@@ -224,7 +224,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_boundary_long_email",
         "category": "BOUNDARY",
         "description": "Very long email address is handled correctly",
-        "command": "email-slicer",
+        "command": "./email-slicer",
         "subcommand": "",
         "args": [],
         "stdin": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.com\n",
@@ -237,7 +237,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_boundary_special_characters_in_username",
         "category": "BOUNDARY",
         "description": "Special characters in username part are preserved as-is",
-        "command": "email-slicer",
+        "command": "./email-slicer",
         "subcommand": "",
         "args": [],
         "stdin": "user+tag.name%special@domain.com\n",
@@ -249,7 +249,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
 ]'''))
 
 # CLI binary/entry point
-CLI_COMMAND = "python3 emailSlicer.py"
+CLI_COMMAND = "./email-slicer"
 
 # Working directory for CLI execution
 WORKING_DIR = "."
