@@ -85,7 +85,7 @@ replay_pid*
 *.test
 *.out
 *.coverprofile
-email-slicer
+email-slicer-binary
 
 # ----- C# / .NET -----
 [Bb]in/
