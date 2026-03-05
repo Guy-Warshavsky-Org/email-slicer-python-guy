@@ -1,0 +1,14 @@
+#!/usr/bin/env python3
+import sys
+
+print("Please enter your Email Id:")
+email = sys.stdin.readline()
+email = email.strip()
+
+if email.find("@") != -1:
+    username = email[:email.index("@")]
+    domain = email[email.index("@") + 1:]
+    print("Your username is: ", username)
+    print("Your domain is: ", domain)
+else:
+    print("Please enter a valid Email Id.")
