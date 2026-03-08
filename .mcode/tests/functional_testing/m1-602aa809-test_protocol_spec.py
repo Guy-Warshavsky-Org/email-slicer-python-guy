@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-03-08T09:34:08.689396+00:00
+Generated at: 2026-03-08T09:35:00.152423+00:00
 Project: email-slicer-python-guy
 Milestone: 1
 """
@@ -60,7 +60,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "args": [],
         "stdin": "avimax37@gmail.com",
         "expected_exit_code": 0,
-        "expected_stdout": "Your username is: avimax37\nYour domain is: gmail.com",
+        "expected_stdout": "Your username is:  avimax37\nYour domain is:  gmail.com",
         "expected_stderr": null,
         "timeout_seconds": 10
     },
@@ -73,7 +73,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "args": [],
         "stdin": "user@mail.example.co.uk",
         "expected_exit_code": 0,
-        "expected_stdout": "Your username is: user\nYour domain is: mail.example.co.uk",
+        "expected_stdout": "Your username is:  user\nYour domain is:  mail.example.co.uk",
         "expected_stderr": null,
         "timeout_seconds": 10
     },
@@ -86,7 +86,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "args": [],
         "stdin": "user+tag@example.com",
         "expected_exit_code": 0,
-        "expected_stdout": "Your username is: user+tag\nYour domain is: example.com",
+        "expected_stdout": "Your username is:  user+tag\nYour domain is:  example.com",
         "expected_stderr": null,
         "timeout_seconds": 10
     },
@@ -99,7 +99,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "args": [],
         "stdin": "first.last@domain.org",
         "expected_exit_code": 0,
-        "expected_stdout": "Your username is: first.last\nYour domain is: domain.org",
+        "expected_stdout": "Your username is:  first.last\nYour domain is:  domain.org",
         "expected_stderr": null,
         "timeout_seconds": 10
     },
@@ -112,7 +112,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "args": [],
         "stdin": "12345@numbers.com",
         "expected_exit_code": 0,
-        "expected_stdout": "Your username is: 12345\nYour domain is: numbers.com",
+        "expected_stdout": "Your username is:  12345\nYour domain is:  numbers.com",
         "expected_stderr": null,
         "timeout_seconds": 10
     },
@@ -125,7 +125,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "args": [],
         "stdin": "user@my-domain.com",
         "expected_exit_code": 0,
-        "expected_stdout": "Your username is: user\nYour domain is: my-domain.com",
+        "expected_stdout": "Your username is:  user\nYour domain is:  my-domain.com",
         "expected_stderr": null,
         "timeout_seconds": 10
     },
@@ -138,7 +138,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "args": [],
         "stdin": "test@example.com\n",
         "expected_exit_code": 0,
-        "expected_stdout": "Your username is: test\nYour domain is: example.com",
+        "expected_stdout": "Your username is:  test\nYour domain is:  example.com",
         "expected_stderr": null,
         "timeout_seconds": 10
     },
@@ -151,7 +151,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "args": [],
         "stdin": "user@domain.com",
         "expected_exit_code": 0,
-        "expected_stdout": "Your username is: user\nYour domain is: domain.com",
+        "expected_stdout": "Your username is:  user\nYour domain is:  domain.com",
         "expected_stderr": null,
         "timeout_seconds": 10
     },
@@ -184,11 +184,11 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
     {
         "name": "test_boundary_empty_input",
         "category": "BOUNDARY",
-        "description": "Empty string input prints error message",
+        "description": "Empty line input prints error message",
         "command": "email-slicer",
         "subcommand": "",
         "args": [],
-        "stdin": "",
+        "stdin": "\n",
         "expected_exit_code": 0,
         "expected_stdout": "Please enter a valid Email Id.",
         "expected_stderr": null,
@@ -216,7 +216,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "args": [],
         "stdin": "  user@domain.com  ",
         "expected_exit_code": 0,
-        "expected_stdout": "Your username is: user\nYour domain is: domain.com",
+        "expected_stdout": "Your username is:  user\nYour domain is:  domain.com",
         "expected_stderr": null,
         "timeout_seconds": 10
     },
@@ -229,46 +229,46 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "args": [],
         "stdin": "user@sub@domain.com",
         "expected_exit_code": 0,
-        "expected_stdout": "Your username is: user\nYour domain is: sub@domain.com",
+        "expected_stdout": "Your username is:  user\nYour domain is:  sub@domain.com",
         "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_boundary_at_sign_only",
         "category": "BOUNDARY",
-        "description": "Input of just '@' has empty username and domain, prints error",
+        "description": "Input of just '@' is treated as valid by Python (has @), prints empty username and domain",
         "command": "email-slicer",
         "subcommand": "",
         "args": [],
         "stdin": "@",
         "expected_exit_code": 0,
-        "expected_stdout": "Please enter a valid Email Id.",
+        "expected_stdout": "Your username is:",
         "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_boundary_at_sign_at_start",
         "category": "BOUNDARY",
-        "description": "Input starting with @ has empty username, prints error",
+        "description": "Input starting with @ is treated as valid by Python, prints empty username and the domain",
         "command": "email-slicer",
         "subcommand": "",
         "args": [],
         "stdin": "@domain.com",
         "expected_exit_code": 0,
-        "expected_stdout": "Please enter a valid Email Id.",
+        "expected_stdout": "Your domain is:  domain.com",
         "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_boundary_at_sign_at_end",
         "category": "BOUNDARY",
-        "description": "Input ending with @ has empty domain, prints error",
+        "description": "Input ending with @ is treated as valid by Python, prints username and empty domain",
         "command": "email-slicer",
         "subcommand": "",
         "args": [],
         "stdin": "user@",
         "expected_exit_code": 0,
-        "expected_stdout": "Please enter a valid Email Id.",
+        "expected_stdout": "Your username is:  user",
         "expected_stderr": null,
         "timeout_seconds": 10
     },
@@ -281,7 +281,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "args": [],
         "stdin": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.com",
         "expected_exit_code": 0,
-        "expected_stdout": "Your username is: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\nYour domain is: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.com",
+        "expected_stdout": "Your username is:  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\nYour domain is:  bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.com",
         "expected_stderr": null,
         "timeout_seconds": 10
     },
@@ -294,7 +294,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "args": [],
         "stdin": "a@b",
         "expected_exit_code": 0,
-        "expected_stdout": "Your username is: a\nYour domain is: b",
+        "expected_stdout": "Your username is:  a\nYour domain is:  b",
         "expected_stderr": null,
         "timeout_seconds": 10
     },
@@ -307,7 +307,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "args": [],
         "stdin": "user_name-test.val+tag@example.com",
         "expected_exit_code": 0,
-        "expected_stdout": "Your username is: user_name-test.val+tag\nYour domain is: example.com",
+        "expected_stdout": "Your username is:  user_name-test.val+tag\nYour domain is:  example.com",
         "expected_stderr": null,
         "timeout_seconds": 10
     },
@@ -320,14 +320,14 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "args": [],
         "stdin": "user@domain.com\n",
         "expected_exit_code": 0,
-        "expected_stdout": "Your username is: user\nYour domain is: domain.com",
+        "expected_stdout": "Your username is:  user\nYour domain is:  domain.com",
         "expected_stderr": null,
         "timeout_seconds": 10
     }
 ]'''))
 
 # CLI binary/entry point
-CLI_COMMAND = "python3 emailSlicer.py"
+CLI_COMMAND = "./email-slicer"
 
 # Working directory for CLI execution
 WORKING_DIR = "."
