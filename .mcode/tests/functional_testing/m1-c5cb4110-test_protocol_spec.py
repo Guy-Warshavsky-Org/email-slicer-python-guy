@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-03-16T18:26:48.494506+00:00
+Generated at: 2026-03-16T18:28:16.229668+00:00
 Project: email-slicer-python-guy
 Milestone: 1
 """
@@ -162,7 +162,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "command": "./emailslicer",
         "subcommand": "",
         "args": [],
-        "stdin": "",
+        "stdin": "\n",
         "expected_exit_code": 0,
         "expected_stdout": "Please enter a valid Email Id.",
         "expected_stderr": null,
