@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-03-18T11:37:02.843757+00:00
+Generated at: 2026-03-18T11:38:19.585129+00:00
 Project: email-slicer-python-guy
 Milestone: 1
 """
@@ -174,16 +174,16 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
     {
         "name": "test_boundary_empty_input",
         "category": "BOUNDARY",
-        "description": "Empty input (no @ symbol) shows invalid message",
+        "description": "Empty stdin (EOF) causes input() to raise EOFError, crashing with exit code 1",
         "command": "python",
         "subcommand": "",
         "args": [
             "emailSlicer.py"
         ],
         "stdin": "",
-        "expected_exit_code": 0,
-        "expected_stdout": "Please enter a valid Email Id.",
-        "expected_stderr": null,
+        "expected_exit_code": 1,
+        "expected_stdout": "Please enter your Email Id:",
+        "expected_stderr": "EOFError",
         "timeout_seconds": 10
     },
     {
