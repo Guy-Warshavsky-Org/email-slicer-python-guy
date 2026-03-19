@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-03-19T15:10:35.513938+00:00
+Generated at: 2026-03-19T15:17:53.211047+00:00
 Project: email-slicer-python-guy
 Milestone: 1
 """
@@ -136,7 +136,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "command": "./email-slicer",
         "subcommand": "",
         "args": [],
-        "stdin": "",
+        "stdin": "\n",
         "expected_exit_code": 0,
         "expected_stdout": "Please enter a valid Email Id.",
         "expected_stderr": null,
@@ -236,7 +236,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
 ]'''))
 
 # CLI binary/entry point
-CLI_COMMAND = "python emailSlicer.py"
+CLI_COMMAND = "./email-slicer"
 
 # Working directory for CLI execution
 WORKING_DIR = "."
