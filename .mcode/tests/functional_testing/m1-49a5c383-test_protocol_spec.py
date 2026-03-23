@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-03-23T17:16:10.175636+00:00
+Generated at: 2026-03-23T17:25:11.992787+00:00
 Project: email-slicer-python-guy
 Milestone: 1
 """
@@ -54,247 +54,202 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
     {
         "name": "test_happy_path_basic_email",
         "category": "HAPPY_PATH",
-        "description": "Valid email is parsed into username and domain",
-        "command": "python",
+        "description": "Valid email returns correct username",
+        "command": "python3 emailSlicer.py",
         "subcommand": "",
-        "args": [
-            "emailSlicer.py"
-        ],
-        "stdin": "avimax37@gmail.com\n",
+        "args": [],
+        "pipe_stdin": "avimax37@gmail.com",
         "expected_exit_code": 0,
         "expected_stdout": "Your username is:  avimax37",
         "expected_stderr": null,
-        "timeout_seconds": 10,
-        "actual_stdout": "Please enter your Email Id:\nYour username is:  avimax37\nYour domain is:  gmail.com\n"
+        "timeout_seconds": 10
     },
     {
         "name": "test_happy_path_domain_output",
         "category": "HAPPY_PATH",
-        "description": "Valid email prints domain correctly",
-        "command": "python",
+        "description": "Valid email returns correct domain",
+        "command": "python3 emailSlicer.py",
         "subcommand": "",
-        "args": [
-            "emailSlicer.py"
-        ],
-        "stdin": "avimax37@gmail.com\n",
+        "args": [],
+        "pipe_stdin": "avimax37@gmail.com",
         "expected_exit_code": 0,
         "expected_stdout": "Your domain is:  gmail.com",
         "expected_stderr": null,
-        "timeout_seconds": 10,
-        "actual_stdout": "Please enter your Email Id:\nYour username is:  avimax37\nYour domain is:  gmail.com\n"
+        "timeout_seconds": 10
     },
     {
         "name": "test_happy_path_subdomain_email",
         "category": "HAPPY_PATH",
-        "description": "Email with subdomain parses domain correctly",
-        "command": "python",
+        "description": "Email with subdomain returns full domain including subdomain",
+        "command": "python3 emailSlicer.py",
         "subcommand": "",
-        "args": [
-            "emailSlicer.py"
-        ],
-        "stdin": "user@mail.example.com\n",
+        "args": [],
+        "pipe_stdin": "user@mail.example.com",
         "expected_exit_code": 0,
         "expected_stdout": "Your domain is:  mail.example.com",
         "expected_stderr": null,
-        "timeout_seconds": 10,
-        "actual_stdout": "Please enter your Email Id:\nYour username is:  user\nYour domain is:  mail.example.com\n"
+        "timeout_seconds": 10
     },
     {
         "name": "test_happy_path_prompt_displayed",
         "category": "HAPPY_PATH",
         "description": "The prompt message is displayed before reading input",
-        "command": "python",
+        "command": "python3 emailSlicer.py",
         "subcommand": "",
-        "args": [
-            "emailSlicer.py"
-        ],
-        "stdin": "test@example.com\n",
+        "args": [],
+        "pipe_stdin": "avimax37@gmail.com",
         "expected_exit_code": 0,
         "expected_stdout": "Please enter your Email Id:",
         "expected_stderr": null,
-        "timeout_seconds": 10,
-        "actual_stdout": "Please enter your Email Id:\nYour username is:  test\nYour domain is:  example.com\n"
+        "timeout_seconds": 10
     },
     {
         "name": "test_invalid_email_no_at_sign",
         "category": "INVALID_ARGS",
-        "description": "Email without @ symbol prints error message",
-        "command": "python",
+        "description": "Email without @ sign shows error message",
+        "command": "python3 emailSlicer.py",
         "subcommand": "",
-        "args": [
-            "emailSlicer.py"
-        ],
-        "stdin": "invalidemail\n",
+        "args": [],
+        "pipe_stdin": "invalidemail",
         "expected_exit_code": 0,
         "expected_stdout": "Please enter a valid Email Id.",
         "expected_stderr": null,
-        "timeout_seconds": 10,
-        "actual_stdout": "Please enter your Email Id:\nPlease enter a valid Email Id.\n"
+        "timeout_seconds": 10
     },
     {
         "name": "test_boundary_empty_input",
         "category": "BOUNDARY",
-        "description": "Empty string input prints error message",
-        "command": "python",
+        "description": "Empty input (no @ sign) shows error message",
+        "command": "python3 emailSlicer.py",
         "subcommand": "",
-        "args": [
-            "emailSlicer.py"
-        ],
-        "stdin": "\n",
+        "args": [],
+        "pipe_stdin": "",
         "expected_exit_code": 0,
         "expected_stdout": "Please enter a valid Email Id.",
         "expected_stderr": null,
-        "timeout_seconds": 10,
-        "actual_stdout": "Please enter your Email Id:\nPlease enter a valid Email Id.\n"
+        "timeout_seconds": 10
     },
     {
         "name": "test_boundary_whitespace_only",
         "category": "BOUNDARY",
-        "description": "Whitespace-only input is trimmed to empty and prints error message",
-        "command": "python",
+        "description": "Whitespace-only input (stripped to empty) shows error message",
+        "command": "python3 emailSlicer.py",
         "subcommand": "",
-        "args": [
-            "emailSlicer.py"
-        ],
-        "stdin": "   \n",
+        "args": [],
+        "pipe_stdin": "   ",
         "expected_exit_code": 0,
         "expected_stdout": "Please enter a valid Email Id.",
         "expected_stderr": null,
-        "timeout_seconds": 10,
-        "actual_stdout": "Please enter your Email Id:\nPlease enter a valid Email Id.\n"
+        "timeout_seconds": 10
     },
     {
         "name": "test_boundary_multiple_at_signs",
         "category": "BOUNDARY",
-        "description": "Email with multiple @ splits on the first one, domain includes the rest",
-        "command": "python",
+        "description": "Multiple @ signs splits on first @, domain includes remaining @ signs",
+        "command": "python3 emailSlicer.py",
         "subcommand": "",
-        "args": [
-            "emailSlicer.py"
-        ],
-        "stdin": "user@@domain.com\n",
+        "args": [],
+        "pipe_stdin": "user@@domain.com",
         "expected_exit_code": 0,
         "expected_stdout": "Your domain is:  @domain.com",
         "expected_stderr": null,
-        "timeout_seconds": 10,
-        "actual_stdout": "Please enter your Email Id:\nYour username is:  user\nYour domain is:  @domain.com\n"
+        "timeout_seconds": 10
     },
     {
         "name": "test_boundary_multiple_at_signs_username",
         "category": "BOUNDARY",
-        "description": "Email with multiple @ splits on first one, username is before first @",
-        "command": "python",
+        "description": "Multiple @ signs splits on first @, username is the part before first @",
+        "command": "python3 emailSlicer.py",
         "subcommand": "",
-        "args": [
-            "emailSlicer.py"
-        ],
-        "stdin": "user@@domain.com\n",
+        "args": [],
+        "pipe_stdin": "user@@domain.com",
         "expected_exit_code": 0,
         "expected_stdout": "Your username is:  user",
         "expected_stderr": null,
-        "timeout_seconds": 10,
-        "actual_stdout": "Please enter your Email Id:\nYour username is:  user\nYour domain is:  @domain.com\n"
+        "timeout_seconds": 10
     },
     {
         "name": "test_boundary_at_sign_at_start",
         "category": "BOUNDARY",
-        "description": "Email starting with @ yields empty username",
-        "command": "python",
+        "description": "@ at start of input results in empty username",
+        "command": "python3 emailSlicer.py",
         "subcommand": "",
-        "args": [
-            "emailSlicer.py"
-        ],
-        "stdin": "@domain.com\n",
+        "args": [],
+        "pipe_stdin": "@domain.com",
         "expected_exit_code": 0,
-        "expected_stdout": "Your username is:  ",
+        "expected_stdout": "Your domain is:  domain.com",
         "expected_stderr": null,
-        "timeout_seconds": 10,
-        "actual_stdout": "Please enter your Email Id:\nYour username is:  \nYour domain is:  domain.com\n"
+        "timeout_seconds": 10
     },
     {
         "name": "test_boundary_at_sign_at_end",
         "category": "BOUNDARY",
-        "description": "Email ending with @ yields empty domain",
-        "command": "python",
+        "description": "@ at end of input results in empty domain",
+        "command": "python3 emailSlicer.py",
         "subcommand": "",
-        "args": [
-            "emailSlicer.py"
-        ],
-        "stdin": "user@\n",
+        "args": [],
+        "pipe_stdin": "user@",
         "expected_exit_code": 0,
-        "expected_stdout": "Your domain is:  ",
+        "expected_stdout": "Your username is:  user",
         "expected_stderr": null,
-        "timeout_seconds": 10,
-        "actual_stdout": "Please enter your Email Id:\nYour username is:  user\nYour domain is:  \n"
+        "timeout_seconds": 10
     },
     {
         "name": "test_boundary_only_at_sign",
         "category": "BOUNDARY",
-        "description": "Input of just @ yields empty username and empty domain",
-        "command": "python",
+        "description": "Just @ sign results in empty username and empty domain",
+        "command": "python3 emailSlicer.py",
         "subcommand": "",
-        "args": [
-            "emailSlicer.py"
-        ],
-        "stdin": "@\n",
+        "args": [],
+        "pipe_stdin": "@",
         "expected_exit_code": 0,
-        "expected_stdout": "Your username is:  ",
+        "expected_stdout": "Your username is:",
         "expected_stderr": null,
-        "timeout_seconds": 10,
-        "actual_stdout": "Please enter your Email Id:\nYour username is:  \nYour domain is:  \n"
+        "timeout_seconds": 10
     },
     {
         "name": "test_boundary_leading_trailing_whitespace",
         "category": "BOUNDARY",
-        "description": "Leading/trailing whitespace is trimmed before parsing",
-        "command": "python",
+        "description": "Leading and trailing whitespace is stripped before parsing",
+        "command": "python3 emailSlicer.py",
         "subcommand": "",
-        "args": [
-            "emailSlicer.py"
-        ],
-        "stdin": "  user@example.com  \n",
+        "args": [],
+        "pipe_stdin": "  avimax37@gmail.com  ",
         "expected_exit_code": 0,
-        "expected_stdout": "Your username is:  user",
+        "expected_stdout": "Your username is:  avimax37",
         "expected_stderr": null,
-        "timeout_seconds": 10,
-        "actual_stdout": "Please enter your Email Id:\nYour username is:  user\nYour domain is:  example.com\n"
+        "timeout_seconds": 10
     },
     {
         "name": "test_pipe_input_valid_email",
         "category": "PIPE_INPUT",
-        "description": "Email piped via stdin is parsed correctly",
-        "command": "python",
+        "description": "Piping a valid email via stdin produces correct output",
+        "command": "python3 emailSlicer.py",
         "subcommand": "",
-        "args": [
-            "emailSlicer.py"
-        ],
-        "stdin": "piped@example.org\n",
+        "args": [],
+        "pipe_stdin": "test@example.org",
         "expected_exit_code": 0,
-        "expected_stdout": "Your domain is:  example.org",
+        "expected_stdout": "Your username is:  test",
         "expected_stderr": null,
-        "timeout_seconds": 10,
-        "actual_stdout": "Please enter your Email Id:\nYour username is:  piped\nYour domain is:  example.org\n"
+        "timeout_seconds": 10
     },
     {
         "name": "test_pipe_input_invalid_email",
         "category": "PIPE_INPUT",
-        "description": "Invalid email piped via stdin prints error message",
-        "command": "python",
+        "description": "Piping an invalid email via stdin produces error message",
+        "command": "python3 emailSlicer.py",
         "subcommand": "",
-        "args": [
-            "emailSlicer.py"
-        ],
-        "stdin": "notanemail\n",
+        "args": [],
+        "pipe_stdin": "notanemail",
         "expected_exit_code": 0,
         "expected_stdout": "Please enter a valid Email Id.",
         "expected_stderr": null,
-        "timeout_seconds": 10,
-        "actual_stdout": "Please enter your Email Id:\nPlease enter a valid Email Id.\n"
+        "timeout_seconds": 10
     }
 ]'''))
 
 # CLI binary/entry point
-CLI_COMMAND = "python emailSlicer.py"
+CLI_COMMAND = "echo 'CLI app - no persistent server needed'"
 
 # Working directory for CLI execution
 WORKING_DIR = "."
