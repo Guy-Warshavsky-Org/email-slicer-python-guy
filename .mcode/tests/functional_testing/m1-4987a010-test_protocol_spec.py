@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-03-23T09:56:02.237448+00:00
+Generated at: 2026-03-23T09:58:16.353024+00:00
 Project: email-slicer-python-guy
 Milestone: 1
 """
@@ -55,9 +55,11 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_happy_path_simple_email",
         "category": "HAPPY_PATH",
         "description": "Valid simple email is parsed into username and domain",
-        "command": "email-slicer",
+        "command": "python",
         "subcommand": "",
-        "args": [],
+        "args": [
+            "emailSlicer.py"
+        ],
         "stdin": "avimax37@gmail.com\n",
         "expected_exit_code": 0,
         "expected_stdout": "avimax37",
@@ -68,9 +70,11 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_happy_path_domain_in_output",
         "category": "HAPPY_PATH",
         "description": "Valid simple email output includes domain",
-        "command": "email-slicer",
+        "command": "python",
         "subcommand": "",
-        "args": [],
+        "args": [
+            "emailSlicer.py"
+        ],
         "stdin": "avimax37@gmail.com\n",
         "expected_exit_code": 0,
         "expected_stdout": "gmail.com",
@@ -81,9 +85,11 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_happy_path_subdomain_email",
         "category": "HAPPY_PATH",
         "description": "Valid email with subdomain is parsed correctly",
-        "command": "email-slicer",
+        "command": "python",
         "subcommand": "",
-        "args": [],
+        "args": [
+            "emailSlicer.py"
+        ],
         "stdin": "user@mail.example.com\n",
         "expected_exit_code": 0,
         "expected_stdout": "mail.example.com",
@@ -94,9 +100,11 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_happy_path_subdomain_username",
         "category": "HAPPY_PATH",
         "description": "Valid email with subdomain returns correct username",
-        "command": "email-slicer",
+        "command": "python",
         "subcommand": "",
-        "args": [],
+        "args": [
+            "emailSlicer.py"
+        ],
         "stdin": "user@mail.example.com\n",
         "expected_exit_code": 0,
         "expected_stdout": "user",
@@ -107,100 +115,116 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_happy_path_prompt_displayed",
         "category": "HAPPY_PATH",
         "description": "The tool displays a prompt asking for email input",
-        "command": "email-slicer",
+        "command": "python",
         "subcommand": "",
-        "args": [],
+        "args": [
+            "emailSlicer.py"
+        ],
         "stdin": "test@example.com\n",
         "expected_exit_code": 0,
-        "expected_stdout": "email",
+        "expected_stdout": "Email",
         "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_invalid_missing_at_sign",
         "category": "INVALID_ARGS",
-        "description": "Email without @ sign is rejected as invalid",
-        "command": "email-slicer",
+        "description": "Email without @ sign shows invalid message on stdout and exits 0",
+        "command": "python",
         "subcommand": "",
-        "args": [],
+        "args": [
+            "emailSlicer.py"
+        ],
         "stdin": "invalidemail\n",
-        "expected_exit_code": 1,
-        "expected_stdout": null,
-        "expected_stderr": "invalid",
+        "expected_exit_code": 0,
+        "expected_stdout": "valid Email",
+        "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_invalid_empty_input",
         "category": "BOUNDARY",
-        "description": "Empty string input is rejected as invalid",
-        "command": "email-slicer",
+        "description": "Empty string input shows invalid message on stdout and exits 0",
+        "command": "python",
         "subcommand": "",
-        "args": [],
+        "args": [
+            "emailSlicer.py"
+        ],
         "stdin": "\n",
-        "expected_exit_code": 1,
-        "expected_stdout": null,
-        "expected_stderr": "invalid",
+        "expected_exit_code": 0,
+        "expected_stdout": "valid Email",
+        "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_invalid_only_at_sign",
         "category": "BOUNDARY",
-        "description": "Input of only @ is rejected as invalid",
-        "command": "email-slicer",
+        "description": "Input of only @ is treated as valid by Python script (contains @), outputs empty username and domain",
+        "command": "python",
         "subcommand": "",
-        "args": [],
+        "args": [
+            "emailSlicer.py"
+        ],
         "stdin": "@\n",
-        "expected_exit_code": 1,
-        "expected_stdout": null,
-        "expected_stderr": "invalid",
+        "expected_exit_code": 0,
+        "expected_stdout": "username",
+        "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_invalid_multiple_at_signs",
         "category": "BOUNDARY",
-        "description": "Email with multiple @ signs is rejected by net/mail.ParseAddress",
-        "command": "email-slicer",
+        "description": "Email with multiple @ signs is accepted by Python script which splits on first @",
+        "command": "python",
         "subcommand": "",
-        "args": [],
+        "args": [
+            "emailSlicer.py"
+        ],
         "stdin": "user@@domain.com\n",
-        "expected_exit_code": 1,
-        "expected_stdout": null,
-        "expected_stderr": "invalid",
+        "expected_exit_code": 0,
+        "expected_stdout": "user",
+        "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_invalid_no_domain",
         "category": "BOUNDARY",
-        "description": "Email with @ but no domain is rejected",
-        "command": "email-slicer",
+        "description": "Email with @ but no domain is accepted by Python script",
+        "command": "python",
         "subcommand": "",
-        "args": [],
+        "args": [
+            "emailSlicer.py"
+        ],
         "stdin": "user@\n",
-        "expected_exit_code": 1,
-        "expected_stdout": null,
-        "expected_stderr": "invalid",
+        "expected_exit_code": 0,
+        "expected_stdout": "user",
+        "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_invalid_no_username",
         "category": "BOUNDARY",
-        "description": "Email with @ but no username is rejected",
-        "command": "email-slicer",
+        "description": "Email with @ but no username is accepted by Python script",
+        "command": "python",
         "subcommand": "",
-        "args": [],
+        "args": [
+            "emailSlicer.py"
+        ],
         "stdin": "@domain.com\n",
-        "expected_exit_code": 1,
-        "expected_stdout": null,
-        "expected_stderr": "invalid",
+        "expected_exit_code": 0,
+        "expected_stdout": "domain.com",
+        "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_pipe_input_valid_email",
         "category": "PIPE_INPUT",
         "description": "Valid email piped via stdin is processed correctly",
-        "command": "email-slicer",
+        "command": "python",
         "subcommand": "",
-        "args": [],
+        "args": [
+            "emailSlicer.py"
+        ],
         "stdin": "piped@example.org\n",
         "expected_exit_code": 0,
         "expected_stdout": "example.org",
@@ -210,23 +234,27 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
     {
         "name": "test_pipe_input_invalid_email",
         "category": "PIPE_INPUT",
-        "description": "Invalid email piped via stdin is rejected",
-        "command": "email-slicer",
+        "description": "Invalid email piped via stdin shows invalid message on stdout",
+        "command": "python",
         "subcommand": "",
-        "args": [],
+        "args": [
+            "emailSlicer.py"
+        ],
         "stdin": "notanemail\n",
-        "expected_exit_code": 1,
-        "expected_stdout": null,
-        "expected_stderr": "invalid",
+        "expected_exit_code": 0,
+        "expected_stdout": "valid Email",
+        "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_boundary_whitespace_trimmed",
         "category": "BOUNDARY",
         "description": "Leading/trailing whitespace around email is trimmed before parsing",
-        "command": "email-slicer",
+        "command": "python",
         "subcommand": "",
-        "args": [],
+        "args": [
+            "emailSlicer.py"
+        ],
         "stdin": "  trimmed@example.com  \n",
         "expected_exit_code": 0,
         "expected_stdout": "trimmed",
@@ -236,20 +264,22 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
     {
         "name": "test_boundary_whitespace_only",
         "category": "BOUNDARY",
-        "description": "Whitespace-only input is rejected as invalid",
-        "command": "email-slicer",
+        "description": "Whitespace-only input is treated as empty after strip, shows invalid message",
+        "command": "python",
         "subcommand": "",
-        "args": [],
+        "args": [
+            "emailSlicer.py"
+        ],
         "stdin": "   \n",
-        "expected_exit_code": 1,
-        "expected_stdout": null,
-        "expected_stderr": "invalid",
+        "expected_exit_code": 0,
+        "expected_stdout": "valid Email",
+        "expected_stderr": null,
         "timeout_seconds": 10
     }
 ]'''))
 
 # CLI binary/entry point
-CLI_COMMAND = "python emailSlicer.py"
+CLI_COMMAND = "echo 'CLI app - no server to start'"
 
 # Working directory for CLI execution
 WORKING_DIR = "."
