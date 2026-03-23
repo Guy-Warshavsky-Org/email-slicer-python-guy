@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-03-23T17:33:12.882886+00:00
+Generated at: 2026-03-23T17:35:35.078984+00:00
 Project: email-slicer-python-guy
 Milestone: 1
 """
@@ -57,8 +57,9 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "description": "Valid email returns correct username",
         "command": "./email-slicer",
         "subcommand": "",
-        "args": [],
-        "pipe_stdin": "avimax37@gmail.com",
+        "args": [
+            "avimax37@gmail.com"
+        ],
         "expected_exit_code": 0,
         "expected_stdout": "Your username is:  avimax37",
         "expected_stderr": null,
@@ -70,8 +71,9 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "description": "Valid email returns correct domain",
         "command": "./email-slicer",
         "subcommand": "",
-        "args": [],
-        "pipe_stdin": "avimax37@gmail.com",
+        "args": [
+            "avimax37@gmail.com"
+        ],
         "expected_exit_code": 0,
         "expected_stdout": "Your domain is:  gmail.com",
         "expected_stderr": null,
@@ -83,8 +85,9 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "description": "Email with subdomain returns full domain including subdomain",
         "command": "./email-slicer",
         "subcommand": "",
-        "args": [],
-        "pipe_stdin": "user@mail.example.com",
+        "args": [
+            "user@mail.example.com"
+        ],
         "expected_exit_code": 0,
         "expected_stdout": "Your domain is:  mail.example.com",
         "expected_stderr": null,
@@ -96,8 +99,9 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "description": "The prompt message is displayed before reading input",
         "command": "./email-slicer",
         "subcommand": "",
-        "args": [],
-        "pipe_stdin": "avimax37@gmail.com",
+        "args": [
+            "avimax37@gmail.com"
+        ],
         "expected_exit_code": 0,
         "expected_stdout": "Please enter your Email Id:",
         "expected_stderr": null,
@@ -109,8 +113,9 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "description": "Email without @ sign shows error message",
         "command": "./email-slicer",
         "subcommand": "",
-        "args": [],
-        "pipe_stdin": "invalidemail",
+        "args": [
+            "invalidemail"
+        ],
         "expected_exit_code": 0,
         "expected_stdout": "Please enter a valid Email Id.",
         "expected_stderr": null,
@@ -122,8 +127,9 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "description": "Empty input (no @ sign) shows error message",
         "command": "./email-slicer",
         "subcommand": "",
-        "args": [],
-        "pipe_stdin": "",
+        "args": [
+            ""
+        ],
         "expected_exit_code": 0,
         "expected_stdout": "Please enter a valid Email Id.",
         "expected_stderr": null,
@@ -135,8 +141,9 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "description": "Whitespace-only input (stripped to empty) shows error message",
         "command": "./email-slicer",
         "subcommand": "",
-        "args": [],
-        "pipe_stdin": "   ",
+        "args": [
+            "   "
+        ],
         "expected_exit_code": 0,
         "expected_stdout": "Please enter a valid Email Id.",
         "expected_stderr": null,
@@ -148,8 +155,9 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "description": "Multiple @ signs splits on first @, domain includes remaining @ signs",
         "command": "./email-slicer",
         "subcommand": "",
-        "args": [],
-        "pipe_stdin": "user@@domain.com",
+        "args": [
+            "user@@domain.com"
+        ],
         "expected_exit_code": 0,
         "expected_stdout": "Your domain is:  @domain.com",
         "expected_stderr": null,
@@ -161,8 +169,9 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "description": "Multiple @ signs splits on first @, username is the part before first @",
         "command": "./email-slicer",
         "subcommand": "",
-        "args": [],
-        "pipe_stdin": "user@@domain.com",
+        "args": [
+            "user@@domain.com"
+        ],
         "expected_exit_code": 0,
         "expected_stdout": "Your username is:  user",
         "expected_stderr": null,
@@ -174,8 +183,9 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "description": "@ at start of input results in empty username",
         "command": "./email-slicer",
         "subcommand": "",
-        "args": [],
-        "pipe_stdin": "@domain.com",
+        "args": [
+            "@domain.com"
+        ],
         "expected_exit_code": 0,
         "expected_stdout": "Your domain is:  domain.com",
         "expected_stderr": null,
@@ -187,8 +197,9 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "description": "@ at end of input results in empty domain",
         "command": "./email-slicer",
         "subcommand": "",
-        "args": [],
-        "pipe_stdin": "user@",
+        "args": [
+            "user@"
+        ],
         "expected_exit_code": 0,
         "expected_stdout": "Your username is:  user",
         "expected_stderr": null,
@@ -200,8 +211,9 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "description": "Just @ sign results in empty username and empty domain",
         "command": "./email-slicer",
         "subcommand": "",
-        "args": [],
-        "pipe_stdin": "@",
+        "args": [
+            "@"
+        ],
         "expected_exit_code": 0,
         "expected_stdout": "Your username is:",
         "expected_stderr": null,
@@ -213,8 +225,9 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "description": "Leading and trailing whitespace is stripped before parsing",
         "command": "./email-slicer",
         "subcommand": "",
-        "args": [],
-        "pipe_stdin": "  avimax37@gmail.com  ",
+        "args": [
+            "  avimax37@gmail.com  "
+        ],
         "expected_exit_code": 0,
         "expected_stdout": "Your username is:  avimax37",
         "expected_stderr": null,
@@ -226,8 +239,9 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "description": "Piping a valid email via stdin produces correct output",
         "command": "./email-slicer",
         "subcommand": "",
-        "args": [],
-        "pipe_stdin": "test@example.org",
+        "args": [
+            "test@example.org"
+        ],
         "expected_exit_code": 0,
         "expected_stdout": "Your username is:  test",
         "expected_stderr": null,
@@ -239,8 +253,9 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "description": "Piping an invalid email via stdin produces error message",
         "command": "./email-slicer",
         "subcommand": "",
-        "args": [],
-        "pipe_stdin": "notanemail",
+        "args": [
+            "notanemail"
+        ],
         "expected_exit_code": 0,
         "expected_stdout": "Please enter a valid Email Id.",
         "expected_stderr": null,
