@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-03-23T09:58:16.353024+00:00
+Generated at: 2026-03-23T09:58:48.887987+00:00
 Project: email-slicer-python-guy
 Milestone: 1
 """
@@ -279,7 +279,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
 ]'''))
 
 # CLI binary/entry point
-CLI_COMMAND = "echo 'CLI app - no server to start'"
+CLI_COMMAND = "python"
 
 # Working directory for CLI execution
 WORKING_DIR = "."
