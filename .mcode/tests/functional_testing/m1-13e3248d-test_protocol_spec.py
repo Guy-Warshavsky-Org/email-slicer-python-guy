@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-03-24T11:27:39.283438+00:00
+Generated at: 2026-03-24T11:28:11.385220+00:00
 Project: email-slicer-python-guy
 Milestone: 1
 """
@@ -55,9 +55,11 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_happy_path_valid_email",
         "category": "HAPPY_PATH",
         "description": "Valid email address is split into username and domain",
-        "command": "email-slicer-go",
+        "command": "python",
         "subcommand": "",
-        "args": [],
+        "args": [
+            "emailSlicer.py"
+        ],
         "stdin": "user@example.com\n",
         "expected_exit_code": 0,
         "expected_stdout": "Your username is:  user\nYour domain is:  example.com",
@@ -68,9 +70,11 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_happy_path_prompt_displayed",
         "category": "HAPPY_PATH",
         "description": "The prompt message is displayed before reading input",
-        "command": "email-slicer-go",
+        "command": "python",
         "subcommand": "",
-        "args": [],
+        "args": [
+            "emailSlicer.py"
+        ],
         "stdin": "test@domain.org\n",
         "expected_exit_code": 0,
         "expected_stdout": "Please enter your Email Id:",
@@ -81,9 +85,11 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_happy_path_complex_domain",
         "category": "HAPPY_PATH",
         "description": "Valid email with subdomain is correctly parsed",
-        "command": "email-slicer-go",
+        "command": "python",
         "subcommand": "",
-        "args": [],
+        "args": [
+            "emailSlicer.py"
+        ],
         "stdin": "admin@mail.company.co.uk\n",
         "expected_exit_code": 0,
         "expected_stdout": "Your username is:  admin\nYour domain is:  mail.company.co.uk",
@@ -94,9 +100,11 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_happy_path_multiple_at_symbols",
         "category": "HAPPY_PATH",
         "description": "Email with multiple @ symbols splits at the first @, matching Python behavior",
-        "command": "email-slicer-go",
+        "command": "python",
         "subcommand": "",
-        "args": [],
+        "args": [
+            "emailSlicer.py"
+        ],
         "stdin": "user@sub@domain.com\n",
         "expected_exit_code": 0,
         "expected_stdout": "Your username is:  user\nYour domain is:  sub@domain.com",
@@ -107,9 +115,11 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_happy_path_at_at_start",
         "category": "HAPPY_PATH",
         "description": "Email with @ at the start yields empty username",
-        "command": "email-slicer-go",
+        "command": "python",
         "subcommand": "",
-        "args": [],
+        "args": [
+            "emailSlicer.py"
+        ],
         "stdin": "@domain.com\n",
         "expected_exit_code": 0,
         "expected_stdout": "Your username is:  \nYour domain is:  domain.com",
@@ -120,9 +130,11 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_happy_path_at_at_end",
         "category": "HAPPY_PATH",
         "description": "Email with @ at the end yields empty domain",
-        "command": "email-slicer-go",
+        "command": "python",
         "subcommand": "",
-        "args": [],
+        "args": [
+            "emailSlicer.py"
+        ],
         "stdin": "user@\n",
         "expected_exit_code": 0,
         "expected_stdout": "Your username is:  user\nYour domain is:  ",
@@ -133,9 +145,11 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_invalid_no_at_symbol",
         "category": "INVALID_ARGS",
         "description": "Input without @ symbol prints error message",
-        "command": "email-slicer-go",
+        "command": "python",
         "subcommand": "",
-        "args": [],
+        "args": [
+            "emailSlicer.py"
+        ],
         "stdin": "invalidemail\n",
         "expected_exit_code": 0,
         "expected_stdout": "Please enter a valid Email Id.",
@@ -146,9 +160,11 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_boundary_empty_input",
         "category": "BOUNDARY",
         "description": "Empty string input prints error message",
-        "command": "email-slicer-go",
+        "command": "python",
         "subcommand": "",
-        "args": [],
+        "args": [
+            "emailSlicer.py"
+        ],
         "stdin": "\n",
         "expected_exit_code": 0,
         "expected_stdout": "Please enter a valid Email Id.",
@@ -159,9 +175,11 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_boundary_only_at_symbol",
         "category": "BOUNDARY",
         "description": "Input that is just @ yields empty username and empty domain",
-        "command": "email-slicer-go",
+        "command": "python",
         "subcommand": "",
-        "args": [],
+        "args": [
+            "emailSlicer.py"
+        ],
         "stdin": "@\n",
         "expected_exit_code": 0,
         "expected_stdout": "Your username is:  \nYour domain is:  ",
@@ -172,9 +190,11 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_boundary_whitespace_trimmed",
         "category": "BOUNDARY",
         "description": "Leading and trailing whitespace is stripped from input before parsing",
-        "command": "email-slicer-go",
+        "command": "python",
         "subcommand": "",
-        "args": [],
+        "args": [
+            "emailSlicer.py"
+        ],
         "stdin": "  user@example.com  \n",
         "expected_exit_code": 0,
         "expected_stdout": "Your username is:  user\nYour domain is:  example.com",
@@ -185,9 +205,11 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_pipe_input_valid_email",
         "category": "PIPE_INPUT",
         "description": "Email piped via stdin is correctly parsed",
-        "command": "email-slicer-go",
+        "command": "python",
         "subcommand": "",
-        "args": [],
+        "args": [
+            "emailSlicer.py"
+        ],
         "stdin": "piped@stdin.com\n",
         "expected_exit_code": 0,
         "expected_stdout": "Your username is:  piped\nYour domain is:  stdin.com",
@@ -198,9 +220,11 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_pipe_input_invalid_email",
         "category": "PIPE_INPUT",
         "description": "Invalid email piped via stdin prints error message",
-        "command": "email-slicer-go",
+        "command": "python",
         "subcommand": "",
-        "args": [],
+        "args": [
+            "emailSlicer.py"
+        ],
         "stdin": "nope\n",
         "expected_exit_code": 0,
         "expected_stdout": "Please enter a valid Email Id.",
