@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-03-25T11:22:55.694684+00:00
+Generated at: 2026-03-25T11:29:04.360174+00:00
 Project: email-slicer-python-guy
 Milestone: 1
 """
@@ -156,15 +156,15 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "timeout_seconds": 10
     },
     {
-        "name": "test_invalid_multiple_at_signs",
-        "category": "INVALID_ARGS",
-        "description": "Email with multiple @ signs should be rejected by net/mail.ParseAddress",
+        "name": "test_boundary_multiple_at_signs",
+        "category": "BOUNDARY",
+        "description": "Email with multiple @ signs is accepted by Python (only checks for presence of @), username is extracted up to first @",
         "command": "email-slicer",
         "subcommand": "",
         "args": [],
         "stdin": "user@@domain.com\n",
         "expected_exit_code": 0,
-        "expected_stdout": "Please enter a valid Email Id.",
+        "expected_stdout": "Your username is:",
         "expected_stderr": null,
         "timeout_seconds": 10
     },
@@ -210,39 +210,39 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
     {
         "name": "test_boundary_at_sign_only",
         "category": "BOUNDARY",
-        "description": "Just an @ sign with no local or domain part should be rejected",
+        "description": "Just an @ sign is accepted by Python (only checks for presence of @), outputs empty username and domain",
         "command": "email-slicer",
         "subcommand": "",
         "args": [],
         "stdin": "@\n",
         "expected_exit_code": 0,
-        "expected_stdout": "Please enter a valid Email Id.",
+        "expected_stdout": "Your username is:",
         "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_boundary_missing_domain",
         "category": "BOUNDARY",
-        "description": "Email with @ but no domain should be rejected",
+        "description": "Email with @ but no domain is accepted by Python (only checks for presence of @), domain is empty",
         "command": "email-slicer",
         "subcommand": "",
         "args": [],
         "stdin": "user@\n",
         "expected_exit_code": 0,
-        "expected_stdout": "Please enter a valid Email Id.",
+        "expected_stdout": "Your username is:",
         "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_boundary_missing_local_part",
         "category": "BOUNDARY",
-        "description": "Email with @ but no local part should be rejected",
+        "description": "Email with @ but no local part is accepted by Python (only checks for presence of @), username is empty",
         "command": "email-slicer",
         "subcommand": "",
         "args": [],
         "stdin": "@example.com\n",
         "expected_exit_code": 0,
-        "expected_stdout": "Please enter a valid Email Id.",
+        "expected_stdout": "Your domain is:",
         "expected_stderr": null,
         "timeout_seconds": 10
     },
@@ -275,7 +275,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
 ]'''))
 
 # CLI binary/entry point
-CLI_COMMAND = "python emailSlicer.py"
+CLI_COMMAND = "./email-slicer"
 
 # Working directory for CLI execution
 WORKING_DIR = "."
