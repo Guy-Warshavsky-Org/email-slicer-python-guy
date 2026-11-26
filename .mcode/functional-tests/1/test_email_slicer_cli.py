@@ -1,4 +1,4 @@
-import subprocess, sys, pathlib, pytest
+import subprocess, sys, pathlib
 
 REPO = pathlib.Path(__file__).resolve().parents[3]
 SCRIPT = REPO / "emailSlicer.py"
