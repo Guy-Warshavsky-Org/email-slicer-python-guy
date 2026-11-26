@@ -17,11 +17,12 @@ def slice_email(email: str) -> tuple[str, str] | None:
         A ``(username, domain)`` tuple, or ``None`` if ``email`` has no ``@``.
     """
     # if email contains @ then valid email id otherwise invalid email id
-    if email.find("@") != -1:
-        username = email[:email.index("@")]     # username value = from 0 to index < @
-        domain = email[email.index("@") + 1:]   # domain value = from index > @ to end
-        return username, domain
-    return None
+    at_index = email.find("@")
+    if at_index == -1:
+        return None
+    username = email[:at_index]     # username value = from 0 to index < @
+    domain = email[at_index + 1:]   # domain value = from index > @ to end
+    return username, domain
 
 
 def main() -> None:
