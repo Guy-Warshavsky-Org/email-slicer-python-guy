@@ -115,6 +115,19 @@ Let's consider the input is **`avimax37@gmail.com`**, so when we write **`email[
 
 This exact same process is followed for **`domain`** also.
 
+<!-- TYPE CHECKING -->
+
+## Type Checking
+
+The script is fully type-hinted and requires Python 3.10+. To check it with mypy in strict mode:
+
+```
+pip install -r requirements-dev.txt
+mypy --strict emailSlicer.py
+```
+
+Optional tests: `pytest`.
+
 <!-- LICENSE -->
 
 ## License
